@@ -36,7 +36,7 @@ Excluded:
 - [x] FNT-01 — Bootstrap the frontend project, central design tokens, app shell, and test runner. Route: delegated (frontend setup spans multiple non-trivial files). Acceptance: development and test commands run; landing page renders. Evidence: `8ab3358` (`feat(frontend): bootstrap public landing`), `npm test` and `npm run build` passed.
 - [x] FNT-02 — Build public landing, registration, and login flows against the existing API. Route: delegated (multiple UI, routing, state, and API files). Acceptance: users can register, log in, see API errors, restore a valid session, and log out. Evidence: `a06e38d` (`feat(auth): add account registration and login`), `npm test`, `npm run build`, and `git diff --check` passed. Risk: browser access remains blocked until the backend enables CORS.
 - [x] FNT-03 — Build the authenticated management area. Route: delegated (multiple non-trivial views/components). Acceptance: it shows account/API-key capabilities, validation access, and an explicitly disabled credits purchase placeholder. Evidence: `64274c7` (`feat(account): add management workspace`), `npm test`, `npm run build`, and `git diff --check` passed. Risk: browser access remains blocked until the backend enables CORS.
-- [ ] FNT-04 — Verify responsive/accessibility behavior and API error handling. Route: delegated (functional checks require fresh execution). Acceptance: relevant tests and build complete, with any unavailable backend-dependent checks documented.
+- [x] FNT-04 — Verify responsive/accessibility behavior and API error handling. Route: delegated (functional checks require fresh execution). Evidence: `npm test` (5/5), `npm run build`, and `git diff --check` passed. Unavailable: live browser/API validation until backend CORS is enabled.
 
 ## Verification
 
@@ -52,7 +52,8 @@ Excluded:
 - 2026-10-21: Completed FNT-01 in commit `8ab3358`; independent verification and parent spot check passed.
 - 2026-10-21: Completed FNT-02 in commit `a06e38d`; medium risk assessment was under the review budget and RDD is disabled. Parent test spot check passed.
 - 2026-10-21: Completed FNT-03 in commit `64274c7`; medium risk assessment was under the review budget and RDD is disabled. Parent test/build/style spot check passed.
+- 2026-10-21: Completed FNT-04; independent verification passed. Live backend flows remain unavailable because the backend does not configure CORS.
 
 ## Next step
 
-Execute FNT-04.
+Deliver version 0.1.0 through lightweight Gitflow and enable backend CORS before live browser testing.
