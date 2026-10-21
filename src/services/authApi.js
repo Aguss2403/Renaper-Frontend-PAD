@@ -39,3 +39,23 @@ export const authApi = {
     method: 'POST', headers: { Authorization: `Bearer ${accessToken}` },
   }),
 }
+
+export const apiKeyApi = {
+  status: (accessToken) => request('/api/v1/clientes/api-key', {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  }),
+  generate: (accessToken) => request('/api/v1/clientes/api-key', {
+    method: 'POST', headers: { Authorization: `Bearer ${accessToken}` },
+  }),
+  revoke: (accessToken) => request('/api/v1/clientes/api-key', {
+    method: 'DELETE', headers: { Authorization: `Bearer ${accessToken}` },
+  }),
+}
+
+export const personApi = {
+  validate: (apiKey, values) => request('/api/v1/personas/validar', {
+    method: 'POST',
+    headers: { 'X-API-Key': apiKey },
+    body: JSON.stringify(values),
+  }),
+}

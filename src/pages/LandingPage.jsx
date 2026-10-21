@@ -20,7 +20,7 @@ export function LandingPage({ session, onNavigate }) {
             para prácticas de aplicaciones distribuidas.
           </p>
           <div className="hero__actions">
-            {session ? <a className="button" href="/cuenta" onClick={(event) => navigate(event, 'home')}>Gestionar cuenta</a> : <>
+            {session ? <a className="button" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta</a> : <>
               <a className="button" href="/registro" onClick={(event) => navigate(event, 'register')}>Crear una cuenta</a>
               <a className="button button--secondary" href="/login" onClick={(event) => navigate(event, 'login')}>Iniciar sesión</a>
             </>}

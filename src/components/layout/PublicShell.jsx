@@ -15,7 +15,7 @@ export function PublicShell({ children, session, onNavigate, onLogout }) {
         </a>
         <nav aria-label="Acceso a cuenta">
           {session ? <>
-            <a className="text-link" href="/cuenta" onClick={(event) => navigate(event, 'home')}>Gestionar cuenta</a>
+            <a className="text-link" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta</a>
             <button className="text-button" type="button" onClick={onLogout}>Cerrar sesión</button>
           </> : <>
             <a className="text-link" href="/login" onClick={(event) => navigate(event, 'login')}>Iniciar sesión</a>
