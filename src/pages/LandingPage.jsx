@@ -4,7 +4,11 @@ const capabilities = [
   ['Validación responsable', 'Consultá datos ficticios con reglas claras y trazables.'],
 ]
 
-export function LandingPage() {
+export function LandingPage({ session, onNavigate }) {
+  const navigate = (event, page) => {
+    event.preventDefault()
+    onNavigate(page)
+  }
   return (
     <>
       <section className="hero" aria-labelledby="hero-title">
@@ -16,8 +20,10 @@ export function LandingPage() {
             para prácticas de aplicaciones distribuidas.
           </p>
           <div className="hero__actions">
-            <a className="button" href="/registro">Crear una cuenta</a>
-            <a className="button button--secondary" href="/login">Iniciar sesión</a>
+            {session ? <a className="button" href="/cuenta" onClick={(event) => navigate(event, 'home')}>Gestionar cuenta</a> : <>
+              <a className="button" href="/registro" onClick={(event) => navigate(event, 'register')}>Crear una cuenta</a>
+              <a className="button button--secondary" href="/login" onClick={(event) => navigate(event, 'login')}>Iniciar sesión</a>
+            </>}
           </div>
         </div>
         <aside className="hero__panel" aria-label="Alcance de la plataforma">

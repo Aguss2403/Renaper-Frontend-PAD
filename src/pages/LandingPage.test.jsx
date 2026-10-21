@@ -1,6 +1,12 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import App from '../app/App'
+
+afterEach(() => {
+  localStorage.clear()
+  window.history.pushState({}, '', '/')
+  vi.unstubAllGlobals()
+})
 
 describe('public landing page', () => {
   it('renders the landing page and account entry points', () => {
@@ -9,5 +15,35 @@ describe('public landing page', () => {
     expect(screen.getByRole('heading', { name: /validación de datos/i })).toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: /iniciar sesión/i })).toHaveLength(2)
     expect(screen.getAllByRole('link', { name: /registrarse|crear una cuenta/i })).toHaveLength(2)
+  })
+
+  it('authenticates a user and shows account actions on the public home', async () => {
+    window.history.pushState({}, '', '/login')
+    const fetch = vi.fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ accessToken: 'token', tokenType: 'Bearer', expiraUtc: '2026-10-22T00:00:00Z' }), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ nombreOrganizacion: 'Equipo PAD', emailContacto: 'equipo@example.com' }), { status: 200 }))
+    vi.stubGlobal('fetch', fetch)
+
+    render(<App />)
+    fireEvent.change(screen.getByLabelText(/correo electrónico/i), { target: { value: 'equipo@example.com' } })
+    fireEvent.change(screen.getByLabelText(/^contraseña/i), { target: { value: 'una-contraseña-segura' } })
+    fireEvent.click(screen.getByRole('button', { name: /iniciar sesión/i }))
+
+    await waitFor(() => expect(screen.getAllByRole('link', { name: /gestionar cuenta/i })).toHaveLength(2))
+    expect(fetch).toHaveBeenNthCalledWith(1, 'http://localhost:5080/api/v1/auth/login', expect.objectContaining({ method: 'POST' }))
+    expect(JSON.parse(localStorage.getItem('renaper-session')).accessToken).toBe('token')
+  })
+
+  it('shows a validation error before submitting an invalid login', () => {
+    window.history.pushState({}, '', '/login')
+    const fetch = vi.fn()
+    vi.stubGlobal('fetch', fetch)
+
+    render(<App />)
+    fireEvent.change(screen.getByLabelText(/correo electrónico/i), { target: { value: 'invalido' } })
+    fireEvent.click(screen.getByRole('button', { name: /iniciar sesión/i }))
+
+    expect(screen.getByRole('alert')).toHaveTextContent(/correo electrónico válido/i)
+    expect(fetch).not.toHaveBeenCalled()
   })
 })
