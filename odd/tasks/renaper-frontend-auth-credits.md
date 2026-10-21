@@ -34,7 +34,7 @@ Excluded:
 ## Tasks
 
 - [x] FNT-01 — Bootstrap the frontend project, central design tokens, app shell, and test runner. Route: delegated (frontend setup spans multiple non-trivial files). Acceptance: development and test commands run; landing page renders. Evidence: `8ab3358` (`feat(frontend): bootstrap public landing`), `npm test` and `npm run build` passed.
-- [ ] FNT-02 — Build public landing, registration, and login flows against the existing API. Route: delegated (multiple UI, routing, state, and API files). Acceptance: users can register, log in, see API errors, restore a valid session, and log out.
+- [x] FNT-02 — Build public landing, registration, and login flows against the existing API. Route: delegated (multiple UI, routing, state, and API files). Acceptance: users can register, log in, see API errors, restore a valid session, and log out. Evidence: `a06e38d` (`feat(auth): add account registration and login`), `npm test`, `npm run build`, and `git diff --check` passed. Risk: browser access remains blocked until the backend enables CORS.
 - [ ] FNT-03 — Build the authenticated management area. Route: delegated (multiple non-trivial views/components). Acceptance: it shows account/API-key capabilities, validation access, and an explicitly disabled credits purchase placeholder.
 - [ ] FNT-04 — Verify responsive/accessibility behavior and API error handling. Route: delegated (functional checks require fresh execution). Acceptance: relevant tests and build complete, with any unavailable backend-dependent checks documented.
 
@@ -50,7 +50,8 @@ Excluded:
 - 2026-10-21: Set post-auth landing flow and selected functional tests instead of TDD.
 - 2026-10-21: Moved the task document to the standalone frontend repository.
 - 2026-10-21: Completed FNT-01 in commit `8ab3358`; independent verification and parent spot check passed.
+- 2026-10-21: Completed FNT-02 in commit `a06e38d`; medium risk assessment was under the review budget and RDD is disabled. Parent test spot check passed.
 
 ## Next step
 
-Execute FNT-02.
+Execute FNT-03.
