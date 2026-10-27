@@ -31,7 +31,7 @@ describe('public landing page', () => {
     fireEvent.click(screen.getByRole('button', { name: /iniciar sesión/i }))
 
     await waitFor(() => expect(screen.getAllByRole('link', { name: /gestionar cuenta/i })).toHaveLength(2))
-    expect(fetch).toHaveBeenNthCalledWith(1, 'http://localhost:5080/api/v1/auth/login', expect.objectContaining({ method: 'POST' }))
+    expect(fetch).toHaveBeenNthCalledWith(1, expect.stringMatching(/\/api\/v1\/auth\/login$/), expect.objectContaining({ method: 'POST' }))
     expect(JSON.parse(localStorage.getItem('renaper-session')).accessToken).toBe('token')
   })
 
