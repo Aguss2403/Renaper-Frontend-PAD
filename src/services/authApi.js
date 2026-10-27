@@ -11,8 +11,8 @@ async function request(path, options = {}) {
   let response
   try {
     response = await fetch(`${apiBaseUrl}${path}`, {
-      headers: { 'Content-Type': 'application/json', ...options.headers },
       ...options,
+      headers: { 'Content-Type': 'application/json', ...options.headers },
     })
   } catch {
     throw new ApiError('No fue posible conectar con el servicio. Verificá tu conexión e intentá nuevamente.')
