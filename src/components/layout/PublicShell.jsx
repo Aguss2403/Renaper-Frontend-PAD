@@ -1,9 +1,9 @@
 export function PublicShell({ children, session, page, onNavigate, onLogout }) {
   const navigate = (event, destination) => { event.preventDefault(); onNavigate(destination) }
-  const isPublic = page !== 'account'
+  const showSiteChrome = page === 'home'
   return <div className="app-shell">
     <a className="skip-link" href="#main-content">Saltar al contenido principal</a>
-    {isPublic && <header className="site-header">
+    {showSiteChrome && <header className="site-header">
       <a className="brand" href="/" aria-label="Renaper Validation, inicio" onClick={(event) => navigate(event, 'home')}>
         <span className="brand-mark" aria-hidden="true"><span>R</span><span>V</span></span>
         <span className="brand-name">Renaper Validation</span>
@@ -18,7 +18,7 @@ export function PublicShell({ children, session, page, onNavigate, onLogout }) {
       </nav>
     </header>}
     <main id="main-content">{children}</main>
-    {isPublic && <footer className="site-footer"><div><a className="brand brand--footer" href="/" onClick={(event) => navigate(event, 'home')}><span className="brand-mark" aria-hidden="true">RV</span><span className="brand-name">Renaper Validation</span></a><p>Entorno académico para validaciones sobre datos ficticios.</p></div><p>Proyecto educativo · No es un servicio oficial de RENAPER.</p></footer>}
+    {showSiteChrome && <footer className="site-footer"><div><a className="brand brand--footer" href="/" onClick={(event) => navigate(event, 'home')}><span className="brand-mark" aria-hidden="true">RV</span><span className="brand-name">Renaper Validation</span></a><p>Entorno académico para validaciones sobre datos ficticios.</p></div><p>Proyecto educativo · No es un servicio oficial de RENAPER.</p></footer>}
   </div>
 }
 
