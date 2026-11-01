@@ -1,55 +1,17 @@
 const capabilities = [
-  ['Registro de organización', 'Centralizá el acceso de tu equipo en una cuenta institucional.'],
-  ['Credenciales de integración', 'Administrá la clave que utiliza tu backend consumidor.'],
-  ['Validación responsable', 'Consultá datos ficticios con reglas claras y trazables.'],
+  { icon: 'team', title: 'Registro de organización', description: 'Centralizá el acceso de tu equipo en una cuenta institucional.' },
+  { icon: 'lock', title: 'Credenciales seguras', description: 'Administrá una clave de integración para tus consultas de prueba.' },
+  { icon: 'check', title: 'Validación responsable', description: 'Practicá con datos ficticios y reglas claras, sin exponer información real.' },
 ]
-
 export function LandingPage({ session, onNavigate }) {
-  const navigate = (event, page) => {
-    event.preventDefault()
-    onNavigate(page)
-  }
-  return (
-    <>
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="hero__copy">
-          <p className="eyebrow">Plataforma de integración académica</p>
-          <h1 id="hero-title">Validación de datos, con una base clara para tu equipo.</h1>
-          <p className="hero__description">
-            Gestioná el acceso de tu organización a un simulador de validación construido
-            para prácticas de aplicaciones distribuidas.
-          </p>
-          <div className="hero__actions">
-            {session ? <a className="button" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta</a> : <>
-              <a className="button" href="/registro" onClick={(event) => navigate(event, 'register')}>Crear una cuenta</a>
-              <a className="button button--secondary" href="/login" onClick={(event) => navigate(event, 'login')}>Iniciar sesión</a>
-            </>}
-          </div>
-        </div>
-        <aside className="hero__panel" aria-label="Alcance de la plataforma">
-          <p className="panel-label">Diseñado para equipos</p>
-          <p className="panel-value">Una integración, reglas explícitas.</p>
-          <p className="panel-detail">
-            No es un servicio oficial ni consulta registros reales de RENAPER.
-          </p>
-        </aside>
-      </section>
-
-      <section className="capabilities" aria-labelledby="capabilities-title">
-        <div className="section-heading">
-          <p className="eyebrow">Acceso ordenado</p>
-          <h2 id="capabilities-title">Todo lo necesario para comenzar</h2>
-        </div>
-        <ul className="capability-grid">
-          {capabilities.map(([title, description], index) => (
-            <li className="capability-card" key={title}>
-              <span className="capability-number" aria-hidden="true">0{index + 1}</span>
-              <h3>{title}</h3>
-              <p>{description}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </>
-  )
+  const navigate = (event, page) => { event.preventDefault(); onNavigate(page) }
+  return <>
+    <section className="hero" id="producto" aria-labelledby="hero-title">
+      <div className="hero__copy"><p className="eyebrow">Plataforma de integración académica</p><h1 id="hero-title">Validá datos ficticios con <span>reglas claras.</span></h1><p className="hero__description">Una API simple para practicar integraciones de identidad de forma segura, trazable y responsable.</p><div className="hero__actions">{session ? <a className="button" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta <span aria-hidden="true">→</span></a> : <><a className="button" href="/registro" onClick={(event) => navigate(event, 'register')}>Crear una cuenta <span aria-hidden="true">→</span></a><a className="button button--secondary" href="#como-funciona">Ver cómo funciona <span aria-hidden="true">↓</span></a></>}</div></div>
+      <aside className="validation-preview" aria-label="Ejemplo visual de una validación completada"><div className="validation-preview__avatar" aria-hidden="true"><span className="validation-preview__head"/><span className="validation-preview__body"/><span className="validation-preview__badge">✓</span></div><h2>Validación completada</h2><ul><li><span aria-hidden="true">✓</span>Datos coinciden</li><li><span aria-hidden="true">✓</span>Cumple edad mínima</li></ul></aside>
+    </section>
+    <section className="capabilities" id="como-funciona" aria-labelledby="capabilities-title"><div className="section-heading"><p className="eyebrow">Todo en un mismo lugar</p><h2 id="capabilities-title">Prepará una integración en pocos pasos</h2><p>Una experiencia ordenada para registrar tu organización, gestionar el acceso y comprobar resultados.</p></div><ul className="capability-grid">{capabilities.map(({ icon, title, description }, index) => <li className="capability-card" key={title}><span className={`capability-icon capability-icon--${icon}`} aria-hidden="true">{index === 0 ? '●●●' : index === 1 ? '▣' : '✓'}</span><span className="capability-number" aria-hidden="true">0{index + 1}</span><h3>{title}</h3><p>{description}</p></li>)}</ul></section>
+    <section className="academic-note" id="seguridad"><span className="academic-note__icon" aria-hidden="true">i</span><div><h2>Simulador académico</h2><p>No consulta registros reales de RENAPER. Todos los datos utilizados en este entorno son ficticios y tienen fines educativos.</p></div></section>
+  </>
 }
+
