@@ -1,24 +1,33 @@
+import { Icon } from '../Icon'
+
 export function PublicShell({ children, session, page, onNavigate, onLogout }) {
   const navigate = (event, destination) => { event.preventDefault(); onNavigate(destination) }
-  const showSiteChrome = page === 'home'
-  return <div className="app-shell">
+  const showSiteChrome = page === 'home' || page === 'account'
+
+  return <div className={`app-shell app-shell--${page}`}>
     <a className="skip-link" href="#main-content">Saltar al contenido principal</a>
     {showSiteChrome && <header className="site-header">
       <a className="brand" href="/" aria-label="Renaper Validation, inicio" onClick={(event) => navigate(event, 'home')}>
-        <span className="brand-mark" aria-hidden="true"><span>R</span><span>V</span></span>
-        <span className="brand-name">Renaper Validation</span>
+        <span className="brand-mark" aria-hidden="true">RV<span /></span>
+        <span className="brand-name">Renaper<span>Validation</span></span>
       </a>
-      <nav aria-label="Navegación principal">
-        {page === 'home' && <div className="site-header__links" aria-label="Secciones de la página">
-          <a href="#producto">Producto</a><a href="#como-funciona">Cómo funciona</a><a href="#seguridad">Seguridad</a>
-        </div>}
-        <div className="site-header__actions">
-          {session ? <><a className="text-link" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta</a><button className="text-button" type="button" onClick={onLogout}>Cerrar sesión</button></> : <><a className="text-link" href="/login" onClick={(event) => navigate(event, 'login')}>Iniciar sesión</a><a className="button button--compact" href="/registro" onClick={(event) => navigate(event, 'register')}>Crear cuenta</a></>}
-        </div>
+      <nav aria-label="Navegación principal" className="site-header__actions">
+        {session ? <>
+          <a className="text-link" href={page === 'account' ? '/' : '/documentacion'} onClick={(event) => navigate(event, page === 'account' ? 'home' : 'documentation')}>
+            {page === 'account' ? 'Inicio' : 'Documentación de integración'}
+          </a>
+          {page === 'account' ? <a className="text-link" href="/documentacion" onClick={(event) => navigate(event, 'documentation')}>Documentación</a> : <a className="button button--compact" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta<Icon name="arrow" /></a>}
+          <button className="text-button header-logout" type="button" onClick={onLogout}><Icon name="logout" /><span>Cerrar sesión</span></button>
+        </> : <>
+          <a className="text-link" href="/login" onClick={(event) => navigate(event, 'login')}>Iniciar sesión</a>
+          <a className="button button--compact" href="/registro" onClick={(event) => navigate(event, 'register')}>Crear cuenta<Icon name="arrow" /></a>
+        </>}
       </nav>
     </header>}
-    <main id="main-content">{children}</main>
-    {showSiteChrome && <footer className="site-footer"><div><a className="brand brand--footer" href="/" onClick={(event) => navigate(event, 'home')}><span className="brand-mark" aria-hidden="true">RV</span><span className="brand-name">Renaper Validation</span></a><p>Entorno académico para validaciones sobre datos ficticios.</p></div><p>Proyecto educativo · No es un servicio oficial de RENAPER.</p></footer>}
+    <main id="main-content" tabIndex="-1">{children}</main>
+    {showSiteChrome && <footer className="site-footer">
+      <p><span className="footer-dot" />Entorno académico · Datos ficticios</p>
+      <p>No es un servicio oficial de RENAPER.</p>
+    </footer>}
   </div>
 }
-
