@@ -10,7 +10,9 @@ describe('public experience', () => {
     expect(screen.getAllByRole('link', { name: /crear (una )?cuenta/i })).toHaveLength(2)
     expect(screen.getByText(/validación completada/i)).toBeInTheDocument()
     expect(screen.queryByText(/post \/api/i)).not.toBeInTheDocument()
-    expect(screen.getByText(/no consulta registros reales/i)).toBeInTheDocument()
+    expect(screen.getByText(/sin consultar registros reales/i)).toBeInTheDocument()
+    expect(screen.queryByText(/todo en un mismo lugar/i)).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /ver cómo funciona/i })).not.toBeInTheDocument()
   })
   it('shows the registration experience', () => {
     window.history.pushState({}, '', '/registro'); render(<App />)

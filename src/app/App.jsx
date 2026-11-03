@@ -31,7 +31,7 @@ export default function App() {
   return <PublicShell session={session} page={page} onNavigate={navigate} onLogout={logout}>
     {page === 'register' && <AuthPage mode="register" onSubmit={register} onNavigate={navigate} />}
     {page === 'login' && <AuthPage mode="login" onSubmit={authenticate} onNavigate={navigate} notice={notice} />}
-    {page === 'account' && session && <AccountPage session={session} onSessionProfile={updateProfile} />}
+    {page === 'account' && session && <AccountPage session={session} onSessionProfile={updateProfile} onNavigate={navigate} />}
     {page === 'documentation' && session && <IntegrationDocsPage onNavigate={navigate} />}
     {page === 'home' && <LandingPage session={session} onNavigate={navigate} />}
   </PublicShell>
