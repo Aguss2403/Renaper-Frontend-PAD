@@ -24,6 +24,8 @@ describe('public experience', () => {
     vi.stubGlobal('fetch', fetch); render(<App />)
     fireEvent.change(screen.getByLabelText(/correo electrónico/i), { target: { value: 'equipo@example.com' } }); fireEvent.change(screen.getByLabelText(/^contraseña/i), { target: { value: 'una-contraseña-segura' } }); fireEvent.click(screen.getByRole('button', { name: /^iniciar sesión$/i }))
     await waitFor(() => expect(screen.getAllByRole('link', { name: /gestionar cuenta/i })).toHaveLength(2))
+    fireEvent.click(screen.getByRole('link', { name: /documentación de integración/i }))
+    expect(screen.getByRole('heading', { name: /implementá renaper validation/i })).toBeInTheDocument()
   })
   it('shows validation before submitting an invalid login', () => {
     window.history.pushState({}, '', '/login'); const fetch = vi.fn(); vi.stubGlobal('fetch', fetch); render(<App />)

@@ -9,11 +9,8 @@ export function PublicShell({ children, session, page, onNavigate, onLogout }) {
         <span className="brand-name">Renaper Validation</span>
       </a>
       <nav aria-label="Navegación principal">
-        {page === 'home' && <div className="site-header__links" aria-label="Secciones de la página">
-          <a href="#producto">Producto</a><a href="#como-funciona">Cómo funciona</a><a href="#seguridad">Seguridad</a>
-        </div>}
         <div className="site-header__actions">
-          {session ? <><a className="text-link" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta</a><button className="text-button" type="button" onClick={onLogout}>Cerrar sesión</button></> : <><a className="text-link" href="/login" onClick={(event) => navigate(event, 'login')}>Iniciar sesión</a><a className="button button--compact" href="/registro" onClick={(event) => navigate(event, 'register')}>Crear cuenta</a></>}
+          {session ? <><a className="text-link" href="/documentacion" onClick={(event) => navigate(event, 'documentation')}>Documentación de integración</a><a className="text-link" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta</a><button className="text-button" type="button" onClick={onLogout}>Cerrar sesión</button></> : <><a className="text-link" href="/login" onClick={(event) => navigate(event, 'login')}>Iniciar sesión</a><a className="button button--compact" href="/registro" onClick={(event) => navigate(event, 'register')}>Crear cuenta</a></>}
         </div>
       </nav>
     </header>}
