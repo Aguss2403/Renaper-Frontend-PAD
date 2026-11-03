@@ -48,11 +48,11 @@ export function CreditsPanel({ accessToken, refreshKey = 0 }) {
     <p>Consultá los datos de pago en la documentación antes de continuar.</p>
     {error && <p className="form-error" role="alert">{error}</p>}
     <div className="credit-panel__actions">
-      <button className="button mercado-pago-button" type="button" disabled={loading || buying || !balance?.comprasHabilitadas} onClick={purchase}>{buying ? 'Preparando checkout…' : 'Pagar con Mercado Pago'}</button>
+      <button className="button" type="button" disabled={loading || buying || !balance?.comprasHabilitadas} onClick={purchase}>{buying ? 'Preparando checkout…' : 'Comprar créditos'}</button>
       <button className="text-button" type="button" disabled={loading} onClick={refresh}>Actualizar saldo</button>
     </div>
     {balance && !balance.comprasHabilitadas && <p>El equipo proveedor todavía no habilitó las compras.</p>}
-    {checkoutUrl && <p role="status"><a className="button mercado-pago-button" href={checkoutUrl}>Continuar con Mercado Pago</a></p>}
+    {checkoutUrl && <p role="status"><a className="button mercado-pago-button" href={checkoutUrl}>Pagar con Mercado Pago</a></p>}
     <p className="credit-panel__note">Al volver del checkout, actualizá el saldo. Solo se acredita cuando nuestro servidor confirma el pago con Mercado Pago; la página de retorno no confirma la compra.</p>
   </section>
 }

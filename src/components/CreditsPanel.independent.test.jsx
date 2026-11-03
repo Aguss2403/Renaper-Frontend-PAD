@@ -28,7 +28,7 @@ it.each([
   creditsApi.checkout.mockResolvedValue({ checkoutUrl })
   render(<CreditsPanel accessToken="owner-session" />)
   await screen.findByText('0')
-  fireEvent.click(screen.getByRole('button', { name: 'Pagar con Mercado Pago' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Comprar créditos' }))
   expect(await screen.findByRole('alert')).toHaveTextContent('El checkout recibido no es un entorno de prueba válido.')
   expect(screen.queryByRole('link', { name: /Ir a Mercado Pago/ })).not.toBeInTheDocument()
   expect(screen.getByText('0')).toBeInTheDocument()
