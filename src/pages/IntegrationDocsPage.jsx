@@ -1,6 +1,6 @@
 export function IntegrationDocsPage({ onNavigate }) {
   return <section className="integration-docs" aria-labelledby="integration-docs-title">
-    <button className="text-button integration-docs__back" type="button" onClick={() => onNavigate('account')}>← Volver a mi cuenta</button>
+    <button className="text-button integration-docs__back" type="button" onClick={() => onNavigate('home')}>← Volver al inicio</button>
     <p className="eyebrow">Documentación de integración</p>
     <h1 id="integration-docs-title">Implementá Renaper Validation en tu backend.</h1>
     <p className="integration-docs__lead">Tu grupo administra la cuenta y la API key desde esta plataforma. La integración de su sistema usa únicamente esa clave para validar personas ficticias.</p>
