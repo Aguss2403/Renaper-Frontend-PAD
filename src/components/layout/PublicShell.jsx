@@ -2,7 +2,7 @@ import { Icon } from '../Icon'
 
 export function PublicShell({ children, session, page, onNavigate, onLogout }) {
   const navigate = (event, destination) => { event.preventDefault(); onNavigate(destination) }
-  const showSiteChrome = page === 'home' || page === 'account'
+  const showSiteChrome = page === 'home' || page === 'account' || page === 'documentation'
 
   return <div className={`app-shell app-shell--${page}`}>
     <a className="skip-link" href="#main-content">Saltar al contenido principal</a>
@@ -13,12 +13,11 @@ export function PublicShell({ children, session, page, onNavigate, onLogout }) {
       </a>
       <nav aria-label="Navegación principal" className="site-header__actions">
         {session ? <>
-          <a className="text-link" href={page === 'account' ? '/' : '/documentacion'} onClick={(event) => navigate(event, page === 'account' ? 'home' : 'documentation')}>
-            {page === 'account' ? 'Inicio' : 'Documentación de integración'}
-          </a>
-          {page === 'account' ? <a className="text-link" href="/documentacion" onClick={(event) => navigate(event, 'documentation')}>Documentación</a> : <a className="button button--compact" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta<Icon name="arrow" /></a>}
+          <a className="text-link" href="/documentacion" aria-current={page === 'documentation' ? 'page' : undefined} onClick={(event) => navigate(event, 'documentation')}>Documentación</a>
+          {page === 'account' ? <a className="text-link" href="/" onClick={(event) => navigate(event, 'home')}>Inicio</a> : <a className="button button--compact" href="/cuenta" onClick={(event) => navigate(event, 'account')}>Gestionar cuenta<Icon name="arrow" /></a>}
           <button className="text-button header-logout" type="button" onClick={onLogout}><Icon name="logout" /><span>Cerrar sesión</span></button>
         </> : <>
+          <a className="text-link" href="/documentacion" aria-current={page === 'documentation' ? 'page' : undefined} onClick={(event) => navigate(event, 'documentation')}>Documentación</a>
           <a className="text-link" href="/login" onClick={(event) => navigate(event, 'login')}>Iniciar sesión</a>
           <a className="button button--compact" href="/registro" onClick={(event) => navigate(event, 'register')}>Crear cuenta<Icon name="arrow" /></a>
         </>}
