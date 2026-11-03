@@ -117,3 +117,6 @@ p.field-hint { margin: .75rem 0 0; }
   .generated-key__value { align-items: flex-start; flex-direction: column; }
   .key-metadata { grid-template-columns: 1fr; }
 }
+.credit-panel{background:var(--color-surface,#fff);border:1px solid var(--color-border);border-radius:1rem;padding:1.5rem;margin-top:1.5rem;overflow-wrap:anywhere}
+.credit-panel__heading,.credit-panel__actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.credit-panel__heading h2{font-size:1.4rem;margin:0}.credit-panel p{line-height:1.6}.credit-panel__note{font-size:.9rem;color:var(--color-muted)}

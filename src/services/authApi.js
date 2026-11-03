@@ -59,3 +59,12 @@ export const personApi = {
     body: JSON.stringify(values),
   }),
 }
+
+export const creditsApi = {
+  balance: (accessToken) => request('/api/v1/clientes/creditos', {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  }),
+  checkout: (accessToken) => request('/api/v1/clientes/compras', {
+    method: 'POST', headers: { Authorization: `Bearer ${accessToken}` },
+  }),
+}

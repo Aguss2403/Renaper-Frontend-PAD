@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { personApi } from './authApi'
+import { personApi, creditsApi } from './authApi'
 
 afterEach(() => vi.unstubAllGlobals())
 
@@ -25,5 +25,14 @@ describe('personApi.validate', () => {
         'X-API-Key': 'rnp_test_key',
       },
     }))
+  })
+})
+
+it('uses session Bearer authentication without client-supplied price for checkout', async () => {
+  const fetch = vi.fn().mockResolvedValue(new Response(JSON.stringify({ id: 'order', checkoutUrl: 'sandbox' }), { status: 200 }))
+  vi.stubGlobal('fetch', fetch)
+  await creditsApi.checkout('session-token')
+  expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/api\/v1\/clientes\/compras$/), {
+    method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer session-token' },
   })
 })
