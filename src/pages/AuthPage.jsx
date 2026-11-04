@@ -1,14 +1,226 @@
-import { useState } from 'react'
-const initialValues = { nombreOrganizacion: '', emailContacto: '', password: '' }
-function validate(values, isRegistration) { if (isRegistration && !values.nombreOrganizacion.trim()) return 'Ingresá el nombre de tu organización.'; if (!/^\S+@\S+\.\S+$/.test(values.emailContacto)) return 'Ingresá un correo electrónico válido.'; if (values.password.length < 12) return 'La contraseña debe tener al menos 12 caracteres.'; return '' }
-const benefits = [ ['✓', 'Entorno académico seguro', 'Diseñado para instituciones educativas y proyectos de investigación.'], ['⌁', 'Una API key por organización', 'Gestioná el acceso de tu equipo de forma simple y segura.'], ['◉', 'Datos completamente ficticios', 'Ideal para desarrollar y aprender sin exponer datos reales.'] ]
-export function AuthPage({ mode, onSubmit, onNavigate, notice }) {
-  const isRegistration = mode === 'register'; const [values, setValues] = useState(initialValues); const [error, setError] = useState(''); const [loading, setLoading] = useState(false); const [showPassword, setShowPassword] = useState(false)
-  function update(event) { setValues({ ...values, [event.target.name]: event.target.value }) }
-  async function submit(event) { event.preventDefault(); const validationError = validate(values, isRegistration); if (validationError) return setError(validationError); setError(''); setLoading(true); try { await onSubmit(values) } catch (submissionError) { setError(submissionError.message) } finally { setLoading(false) } }
-  return <section className="auth-page" aria-labelledby="auth-title">
-    <div className="auth-aside"><a className="auth-brand" href="/" onClick={(event) => { event.preventDefault(); onNavigate('home') }}><span className="auth-brand__mark" aria-hidden="true">RV</span><span>Renaper<br/>Validation</span></a><div className="auth-aside__content"><span className="auth-aside__rule"/><h1 id="auth-title">{isRegistration ? <>Creá la cuenta <span>de tu equipo.</span></> : <>Volvé a tu <span>espacio de trabajo.</span></>}</h1><p>{isRegistration ? 'Configurá el acceso de tu organización y empezá a probar la API en minutos.' : 'Ingresá con las credenciales de tu organización para continuar con tus validaciones.'}</p><ul>{benefits.map(([icon, title, description]) => <li key={title}><span aria-hidden="true">{icon}</span><div><strong>{title}</strong><p>{description}</p></div></li>)}</ul></div><p className="auth-aside__disclaimer">No es un servicio oficial de RENAPER.</p></div>
-    <div className="auth-content"><a className="auth-content__back" href="/" onClick={(event) => { event.preventDefault(); onNavigate('home') }}>← Volver al inicio</a><form className="auth-form" onSubmit={submit} noValidate><div className="auth-form__heading"><p className="eyebrow">Acceso de organizaciones</p><h2>{isRegistration ? 'Crear una cuenta' : 'Iniciar sesión'}</h2><p>{isRegistration ? 'Completá los datos de tu organización.' : 'Ingresá los datos de tu organización.'}</p></div>{notice && <p className="form-notice" role="status">{notice}</p>}{error && <p className="form-error" role="alert">{error}</p>}{isRegistration && <label>Nombre de la organización<input name="nombreOrganizacion" value={values.nombreOrganizacion} onChange={update} autoComplete="organization" placeholder="Ej. Facultad de Ingeniería" required maxLength="100" /></label>}<label>Correo electrónico de contacto<input name="emailContacto" type="email" value={values.emailContacto} onChange={update} autoComplete="email" placeholder="equipo@institucion.edu.ar" required maxLength="254" /></label><label>Contraseña<span className="password-field"><input name="password" type={showPassword ? 'text' : 'password'} value={values.password} onChange={update} autoComplete={isRegistration ? 'new-password' : 'current-password'} placeholder="Ingresá tu contraseña" required minLength="12" maxLength="128"/><button type="button" className="password-toggle" onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}>{showPassword ? 'Ocultar' : 'Ver'}</button></span>{isRegistration && <small>Mínimo 12 caracteres.</small>}</label><button className="button auth-form__submit" type="submit" disabled={loading}>{loading ? 'Procesando…' : isRegistration ? 'Crear cuenta' : 'Iniciar sesión'}</button><p className="form-switch">{isRegistration ? '¿Ya tenés una cuenta?' : '¿Todavía no tenés una cuenta?'}{' '}<a href={isRegistration ? '/login' : '/registro'} onClick={(event) => { event.preventDefault(); onNavigate(isRegistration ? 'login' : 'register') }}>{isRegistration ? 'Iniciá sesión' : 'Registrate'}</a></p></form></div>
-  </section>
+import { useState } from "react";
+const initialValues = {
+  nombreOrganizacion: "",
+  emailContacto: "",
+  password: "",
+};
+function validate(values, isRegistration) {
+  if (isRegistration && !values.nombreOrganizacion.trim())
+    return "Ingresá el nombre de tu organización.";
+  if (!/^\S+@\S+\.\S+$/.test(values.emailContacto))
+    return "Ingresá un correo electrónico válido.";
+  if (values.password.length < 12)
+    return "La contraseña debe tener al menos 12 caracteres.";
+  return "";
 }
-
+const benefits = [
+  [
+    "✓",
+    "Entorno académico seguro",
+    "Diseñado para instituciones educativas y proyectos de investigación.",
+  ],
+  [
+    "⌁",
+    "Una API key por organización",
+    "Gestioná el acceso de tu equipo de forma simple y segura.",
+  ],
+  [
+    "◉",
+    "Datos completamente ficticios",
+    "Ideal para desarrollar y aprender sin exponer datos reales.",
+  ],
+];
+export function AuthPage({ mode, onSubmit, onNavigate, notice }) {
+  const isRegistration = mode === "register";
+  const [values, setValues] = useState(initialValues);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  function update(event) {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  }
+  async function submit(event) {
+    event.preventDefault();
+    const validationError = validate(values, isRegistration);
+    if (validationError) return setError(validationError);
+    setError("");
+    setLoading(true);
+    try {
+      await onSubmit(values);
+    } catch (submissionError) {
+      setError(submissionError.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+  return (
+    <section className="auth-page" aria-labelledby="auth-title">
+      <div className="auth-aside">
+        <a
+          className="auth-brand"
+          href="/"
+          onClick={(event) => {
+            event.preventDefault();
+            onNavigate("home");
+          }}
+        >
+          <span className="auth-brand__mark" aria-hidden="true">
+            RV
+          </span>
+          <span>
+            Renaper
+            <br />
+            Validation
+          </span>
+        </a>
+        <div className="auth-aside__content">
+          <span className="auth-aside__rule" />
+          <h1 id="auth-title">
+            {isRegistration ? (
+              <>
+                Creá la cuenta <span>de tu equipo.</span>
+              </>
+            ) : (
+              <>
+                Volvé a tu <span>espacio de trabajo.</span>
+              </>
+            )}
+          </h1>
+          <p>
+            {isRegistration
+              ? "Configurá el acceso de tu organización y empezá a probar la API en minutos."
+              : "Ingresá con las credenciales de tu organización para continuar con tus validaciones."}
+          </p>
+          <ul>
+            {benefits.map(([icon, title, description]) => (
+              <li key={title}>
+                <span aria-hidden="true">{icon}</span>
+                <div>
+                  <strong>{title}</strong>
+                  <p>{description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p className="auth-aside__disclaimer">
+          No es un servicio oficial de RENAPER.
+        </p>
+      </div>
+      <div className="auth-content">
+        <a
+          className="auth-content__back"
+          href="/"
+          onClick={(event) => {
+            event.preventDefault();
+            onNavigate("home");
+          }}
+        >
+          ← Volver al inicio
+        </a>
+        <form className="auth-form" onSubmit={submit} noValidate>
+          <div className="auth-form__heading">
+            <p className="eyebrow">Acceso de organizaciones</p>
+            <h2>{isRegistration ? "Crear una cuenta" : "Iniciar sesión"}</h2>
+            <p>
+              {isRegistration
+                ? "Completá los datos de tu organización."
+                : "Ingresá los datos de tu organización."}
+            </p>
+          </div>
+          {notice && (
+            <p className="form-notice" role="status">
+              {notice}
+            </p>
+          )}
+          {error && (
+            <p className="form-error" role="alert">
+              {error}
+            </p>
+          )}
+          {isRegistration && (
+            <label>
+              Nombre de la organización
+              <input
+                name="nombreOrganizacion"
+                value={values.nombreOrganizacion}
+                onChange={update}
+                autoComplete="organization"
+                placeholder="Ej. Facultad de Ingeniería"
+                required
+                maxLength="100"
+              />
+            </label>
+          )}
+          <label>
+            Correo electrónico de contacto
+            <input
+              name="emailContacto"
+              type="email"
+              value={values.emailContacto}
+              onChange={update}
+              autoComplete="email"
+              placeholder="equipo@institucion.edu.ar"
+              required
+              maxLength="254"
+            />
+          </label>
+          <label>
+            Contraseña
+            <span className="password-field">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={update}
+                autoComplete={
+                  isRegistration ? "new-password" : "current-password"
+                }
+                placeholder="Ingresá tu contraseña"
+                required
+                minLength="12"
+                maxLength="128"
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword((current) => !current)}
+                aria-label={
+                  showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                }
+              >
+                {showPassword ? "Ocultar" : "Ver"}
+              </button>
+            </span>
+            {isRegistration && <small>Mínimo 12 caracteres.</small>}
+          </label>
+          <button
+            className="button auth-form__submit"
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "Procesando…"
+              : isRegistration
+                ? "Crear cuenta"
+                : "Iniciar sesión"}
+          </button>
+          <p className="form-switch">
+            {isRegistration
+              ? "¿Ya tenés una cuenta?"
+              : "¿Todavía no tenés una cuenta?"}{" "}
+            <a
+              href={isRegistration ? "/login" : "/registro"}
+              onClick={(event) => {
+                event.preventDefault();
+                onNavigate(isRegistration ? "login" : "register");
+              }}
+            >
+              {isRegistration ? "Iniciá sesión" : "Registrate"}
+            </a>
+          </p>
+        </form>
+      </div>
+    </section>
+  );
+}
