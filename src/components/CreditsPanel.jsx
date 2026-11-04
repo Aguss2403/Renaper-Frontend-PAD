@@ -122,9 +122,8 @@ export function CreditsPanel({ accessToken, refreshKey = 0 }) {
         </p>
       )}
       <p className="credit-panel__note">
-        Al volver del checkout, actualizá el saldo. Solo se acredita cuando
-        nuestro servidor confirma el pago con Mercado Pago; la página de retorno
-        no confirma la compra.
+        Al volver del checkout, si no aparece el saldo, haz click en "Actualizar Saldo". 
+        En caso de no acreditarse contactar con soportre. 
       </p>
     </section>
   );
