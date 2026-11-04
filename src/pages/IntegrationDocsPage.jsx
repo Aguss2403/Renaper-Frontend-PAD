@@ -7,6 +7,7 @@ const sections = [
   ["integracion", "Integrar la validación"],
   ["resultados", "Interpretar los resultados"],
   ["errores", "Errores y soluciones"],
+  ["Datos de Prueba", "Datos de Prueba"],
 ];
 
 function GuideImage({ file, alt, portrait = false }) {
@@ -220,6 +221,10 @@ export function IntegrationDocsPage() {
             caption="Datos de acceso de la cuenta tester"
             headers={["Dato", "Valor"]}
             rows={[
+              [
+                <strong>Username</strong>,
+                <code>TESTUSER4182141009181240533</code>,
+              ],
               [<strong>Contraseña</strong>, <code>rvz3Ajadmf</code>],
               [<strong>Código de verificación</strong>, <code>160434</code>],
             ]}
@@ -446,11 +451,31 @@ export function IntegrationDocsPage() {
               ],
             ]}
           />
-          <div className="docs-callout">
-            <strong>Protegé tus credenciales.</strong> Si necesitás ayuda,
-            compartí el momento aproximado, código HTTP y mensaje recibido;
-            nunca una API key ni una contraseña.
-          </div>
+        </section>
+
+        <section id="Datos de Prueba" data-doc-section>
+          <p className="docs-section-label">07 · Datos de Prueba</p>
+          <p>
+            Usá estos datos para poder probar la implementacion de nuestro
+            sistema.
+          </p>
+          <Table
+            caption="Datos para probar el Sistema"
+            headers={["DNI", "Nombre", "Apellido", "Fecha de Nacimiento"]}
+            rows={[
+              [10999888, "MARTA SUSANA", "HERRERA", "1952-02-28"],
+              [14222333, "ALBERTO JUAN", "ROSSI", "1960-11-05"],
+              [25666777, "JORGE LUIS", "PERALTA", "1976-04-10"],
+              [28111999, "LAURA", "SANCHEZ DE BUSTAMANTE", "1980-10-10"],
+              [32444555, "ANA LAURA", "TOLEDO", "1986-12-24"],
+              [38555444, "MARIA SOL", "FERNANDEZ", "1994-07-22"],
+              [40111222, "LUCAS MATIAS", "GOMEZ", "1997-03-15"],
+              [42333999, "FACUNDO", "MARTINEZ", "2000-01-30"],
+              [45000111, "ALEX", "LOPEZ", "2003-05-05"],
+              [60000001, "ANA", "PRUEBA", "2016-10-20"],
+              [95111222, "JOAO", "DA SILVA", "1985-09-09"],
+            ]}
+          />
         </section>
       </article>
     </section>
