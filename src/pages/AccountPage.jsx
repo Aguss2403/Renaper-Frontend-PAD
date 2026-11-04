@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { CreditsPanel } from '../components/CreditsPanel'
 import { Icon } from '../components/Icon'
 import { ApiError, apiKeyApi, authApi, personApi } from '../services/authApi'
 
@@ -19,6 +20,7 @@ function validationError(values) {
 }
 
 export function AccountPage({ session, onSessionProfile, onNavigate }) {
+  const [creditRefresh, setCreditRefresh] = useState(0)
   const [profile, setProfile] = useState(session.profile)
   const [apiKeyStatus, setApiKeyStatus] = useState(null)
   const [generatedKey, setGeneratedKey] = useState('')
@@ -111,6 +113,7 @@ export function AccountPage({ session, onSessionProfile, onNavigate }) {
         edadMinima: Number(validationValues.edadMinima),
       })
       setValidationResult(result)
+      setCreditRefresh(value => value + 1)
     } catch (errorResponse) {
       setValidationErrorMessage(errorResponse.message || 'No fue posible validar los datos. Intentá nuevamente.')
     } finally {
@@ -209,11 +212,7 @@ export function AccountPage({ session, onSessionProfile, onNavigate }) {
           </div>
         </section>
 
-        <section className="credits-note" aria-labelledby="credits-title">
-          <span className="card-icon"><Icon name="clock" /></span>
-          <div><h2 id="credits-title">Créditos <span className="status-badge">Próximamente</span></h2><p>La compra de créditos y la integración con billetera todavía no están disponibles.</p></div>
-          <button className="button button--secondary button--compact" type="button" disabled>Comprar créditos</button>
-        </section>
+        <CreditsPanel accessToken={session.accessToken} refreshKey={creditRefresh} />
       </div>
     </section>
   )

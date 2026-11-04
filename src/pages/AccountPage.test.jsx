@@ -1,11 +1,11 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { AccountPage } from './AccountPage'
-import { ApiError, apiKeyApi, authApi, personApi } from '../services/authApi'
+import { ApiError, apiKeyApi, authApi, personApi, creditsApi } from '../services/authApi'
 
 vi.mock('../services/authApi', async (importOriginal) => {
   const original = await importOriginal()
-  return { ...original, authApi: { me: vi.fn() }, apiKeyApi: { status: vi.fn(), generate: vi.fn(), revoke: vi.fn() }, personApi: { validate: vi.fn() } }
+  return { ...original, authApi: { me: vi.fn() }, apiKeyApi: { status: vi.fn(), generate: vi.fn(), revoke: vi.fn() }, personApi: { validate: vi.fn() }, creditsApi: { balance: vi.fn(), checkout: vi.fn() } }
 })
 const profile = { nombreOrganizacion: 'Equipo de prueba', emailContacto: 'equipo@example.com', fechaCreacionUtc: '2026-10-20T14:00:00Z' }
 const metadata = { prefijo: 'rv_demo', activa: true, fechaCreacionUtc: '2026-11-01T14:00:00Z' }
@@ -23,6 +23,7 @@ function fillValidation() {
 beforeEach(() => {
   vi.resetAllMocks()
   authApi.me.mockResolvedValue(profile)
+  creditsApi.balance.mockResolvedValue({ saldo: 10, comprasHabilitadas: false, paquete: { consultas: 1000, precio: 1000, moneda: 'ARS' } })
   apiKeyApi.status.mockResolvedValue(metadata)
 })
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); localStorage.clear() })

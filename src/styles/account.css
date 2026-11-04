@@ -117,3 +117,7 @@ p.field-hint { margin: .75rem 0 0; }
   .generated-key__value { align-items: flex-start; flex-direction: column; }
   .key-metadata { grid-template-columns: 1fr; }
 }
+.credit-panel{background:var(--color-surface,#fff);border:1px solid var(--color-border);border-radius:1rem;box-shadow:0 .5rem 1.5rem rgba(31,62,97,.08);padding:1.5rem;margin-top:1.5rem;overflow-wrap:anywhere}
+.credit-panel__heading,.credit-panel__actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.credit-panel__heading h2{font-size:1.4rem;margin:0}.credit-panel p{line-height:1.6}.credit-panel__note{font-size:.9rem;color:var(--color-muted)}
+.mercado-pago-button{background:#ffe600;border-color:#ffe600;color:#2d3277;font-weight:700}.mercado-pago-button:hover:not(:disabled),.mercado-pago-button:focus-visible{background:#f5dc00;border-color:#f5dc00;color:#2d3277}.mercado-pago-button:disabled{background:#f6eeb1;border-color:#f6eeb1;color:#817c55}
